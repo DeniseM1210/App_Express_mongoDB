@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const app = express();
 const PORT = 3001;
@@ -9,15 +10,10 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname));
 
-mongoose.connect('mongodb+srv://denise:nanami777@mongodb.oub9alm.mongodb.net/?retryWrites=true&w=majority&appName=mongoDB');
+mongoose.connect(process.env.MONGO_URI).then(() => console.log('Conexion exitosa'))
+.catch(() => console.error('Error al conectarse'));
 
-const connection = mongoose.connection;
 
-connection.on('error', console.error.bind(console, 'Error de conexion a MongoDB'));
-
-connection.once('open', ()=>{
-    console.log('Conexion EXITOSA a MongoDB');
-});
 
 // ---------------- Crear el MODELO de datos ---------------
 const alumnoSchema = new mongoose.Schema({
