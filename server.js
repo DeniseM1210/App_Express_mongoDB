@@ -34,18 +34,24 @@ app.get('/', async (request, response)=>{
 });
 
 //---- Altas
-app.post('/alumnos', async (request, response)=>{
-    const alumno = new Alumno({
-        numControl : request.body.numControl,
-        nombre : request.body.nombre,
-        primerAp : request.body.primerAp,
-        segundoAp : request.body.segundoAp,
-        fechaNac : request.body.fechaNac,
-        semestre : request.body.semestre,
-        carrera : request.body.carrera
-    });
-    const nuevoAlumno = await alumno.save();
-    response.status(201).json({exito:true});
+app.post('/alumnos', async (request, response) => {
+    try {
+        const alumno = new Alumno({
+            numControl : request.body.numControl,
+            nombre : request.body.nombre,
+            primerAp : request.body.primerAp,
+            segundoAp : request.body.segundoAp,
+            fechaNac : request.body.fechaNac,
+            semestre : request.body.semestre,
+            carrera : request.body.carrera
+        });
+
+        const nuevoAlumno = await alumno.save();
+        response.status(201).json({ exito: true });
+    } catch (error) {
+        console.error('Error al guardar alumno:', error);
+        response.status(500).json({ exito: false, error: error.message });
+    }
 });
 
 //-----BAJAS
