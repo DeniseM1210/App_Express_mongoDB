@@ -10,11 +10,9 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname));
 
-mongoose.connect(process.env.MONGO_URI, {
-  useUnifiedTopology: true,
-})
-.then(() => console.log('Conexion exitosa'))
-.catch((error) => console.error('Error al conectarse', error));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('Conexión exitosa'))
+  .catch((error) => console.error('Error al conectarse', error));
 
 
 
